@@ -18,8 +18,10 @@ public class Main {
         Connection conexao = banco.conectar();
 
 
-        Medico medico = new Medico("Diogo Camargo","2026");
-        banco.adicionarMedico(medico, conexao);
+        Medico medico = new Medico("Maria Camargo Santos","1010");
+        medico.setId(5);
+        banco.atualizarMedico(medico,conexao);
+       // banco.adicionarMedico(medico, conexao);
 
         banco.desconectar(conexao);
         }
