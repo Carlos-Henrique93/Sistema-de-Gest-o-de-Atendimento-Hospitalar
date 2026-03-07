@@ -16,6 +16,11 @@ public class Main {
 
         Banco banco = new Banco();
         Connection conexao = banco.conectar();
+
+
+        Medico medico = new Medico("Diogo Camargo","2026");
+        banco.adicionarMedico(medico, conexao);
+
         banco.desconectar(conexao);
         }
     }

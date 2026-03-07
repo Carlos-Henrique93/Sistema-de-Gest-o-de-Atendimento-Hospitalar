@@ -1,9 +1,9 @@
 package br.com.carlossantos.controller;
 
 import br.com.carlossantos.model.*;
-
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
 public class Banco {
@@ -38,7 +38,24 @@ public class Banco {
         }
 
         public void adicionarMedico(Medico medico,Connection conexao){
+                String sql = "insert into medico (nome,crm) values (?,?)";
 
+                try{
+                    PreparedStatement stmt = conexao.prepareStatement(sql);
+                    stmt.setString(1, medico.getNome());
+                    stmt.setString(2, medico.getCrm());
+
+                    int resultado = stmt.executeUpdate();
+
+                    if(resultado>0){
+                        System.out.println("Medico adicionado com sucesso!");
+                    }
+
+                    stmt.close();
+                    conexao.close();
+                } catch (SQLException ex) {
+                    System.out.println("Aconteceu um erro ao inserir medico no banco de dados!\n");
+                }
         }
 
         public void adicionarPaciente(Paciente paciente, Connection conexao){
