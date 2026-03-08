@@ -15,6 +15,11 @@ public class Medico {
         this.crm = crm;
         this.atendimentos = new ArrayList<>();
     }
+    public Medico(){
+        this.id = 0;
+        this.nome = "";
+        this.crm = "";
+    }
 
     public Integer getId() {
         return id;

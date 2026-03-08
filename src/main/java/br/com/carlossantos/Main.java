@@ -10,6 +10,7 @@ import br.com.carlossantos.model.Telefone;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.List;
 
 public class Main {
     public static void main(String[] args) throws SQLException {
@@ -17,12 +18,12 @@ public class Main {
         Banco banco = new Banco();
         Connection conexao = banco.conectar();
 
-
-        Medico medico = new Medico("Maria Camargo Santos","1010");
-        medico.setId(5);
-        banco.atualizarMedico(medico,conexao);
-       // banco.adicionarMedico(medico, conexao);
-
+        List<Medico> medicos = banco.pesquisaTodosMedicos(conexao);
         banco.desconectar(conexao);
+
+        for (int i=0;i<medicos.size();i++) {
+            Medico m = medicos.get(i);
+            System.out.println(m.getId() + " - " + m.getNome()+ " - "+ m.getCrm());
         }
     }
+}

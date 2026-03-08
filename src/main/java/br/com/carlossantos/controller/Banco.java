@@ -1,10 +1,10 @@
 package br.com.carlossantos.controller;
 
 import br.com.carlossantos.model.*;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
+
+import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Banco {
 
@@ -77,6 +77,31 @@ public class Banco {
             System.out.println("Aconteceu um erro ao adicionar medico no banco de dados!");
             e.printStackTrace();
         }
+    }
+    public List<Medico> pesquisaTodosMedicos(Connection conexao){
+        List<Medico> medicos = new ArrayList<>();
+        String sql = "select * from medico";
+        try {
+            PreparedStatement stmt = conexao.prepareStatement(sql);
+            ResultSet rs = stmt.executeQuery();
+
+        while (rs.next()){
+            Medico medico =  new Medico();
+            medico.setId(rs.getInt("id"));
+            medico.setNome(rs.getString("nome"));
+            medico.setCrm(rs.getString("crm"));
+
+            medicos.add(medico);
+
+        }
+        rs.close();
+        stmt.close();
+
+        } catch (SQLException e) {
+            System.out.println("Erro ao Listar os cadastros dos Medicos!");
+            e.printStackTrace();
+        }
+        return medicos;
     }
     public void adicionarPaciente(Paciente paciente, Connection conexao){
 
