@@ -11,6 +11,7 @@ import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) throws SQLException {
@@ -19,11 +20,19 @@ public class Main {
         Connection conexao = banco.conectar();
 
         List<Medico> medicos = banco.pesquisaTodosMedicos(conexao);
-        banco.desconectar(conexao);
 
         for (int i=0;i<medicos.size();i++) {
             Medico m = medicos.get(i);
             System.out.println(m.getId() + " - " + m.getNome()+ " - "+ m.getCrm());
         }
+        System.out.println("*****************");
+        System.out.println("SISTEMA DE SAUDE");
+        System.out.println("*****************");
+        Scanner input = new Scanner(System.in);
+        System.out.println("Informe o ID do Medico que deseja deletar: ");
+        int id = input.nextInt();
+
+       banco.detetarMedico(id,conexao);
+       banco.desconectar(conexao);
     }
 }

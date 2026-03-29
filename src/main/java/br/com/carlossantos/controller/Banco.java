@@ -103,6 +103,48 @@ public class Banco {
         }
         return medicos;
     }
+
+    public void detetarMedico(int id, Connection conexao){
+        String sql = "delete from medico where id = ?";
+
+        try {
+            PreparedStatement stmt = conexao.prepareStatement(sql);
+            stmt.setInt(1, id);
+            int resultado = stmt.executeUpdate();
+
+            if(resultado>0){
+                System.out.println("Medico deletado com sucesso!");
+            }else {
+                System.out.println("Nenhum medico encontrado com ID informado!");
+            }
+
+        } catch (SQLException e) {
+            System.out.println("Não foi possivel deletar medico pelo ID");
+            e.printStackTrace();
+        }
+
+    }
+
+    public void detetarMedicoCrm(String crm, Connection conexao){
+        String sql = "delete from medico where crm = ?";
+
+        try {
+            PreparedStatement stmt = conexao.prepareStatement(sql);
+            stmt.setString(1, crm);
+            int resultado = stmt.executeUpdate();
+
+            if(resultado>0){
+                System.out.println("Medico deletado com sucesso!");
+            }else {
+                System.out.println("Nenhum medico encontrado com CRM informado!");
+            }
+
+        } catch (SQLException e) {
+            System.out.println("Não foi possivel deletar medico pelo CRM");
+            e.printStackTrace();
+        }
+    }
+
     public void adicionarPaciente(Paciente paciente, Connection conexao){
 
     }
