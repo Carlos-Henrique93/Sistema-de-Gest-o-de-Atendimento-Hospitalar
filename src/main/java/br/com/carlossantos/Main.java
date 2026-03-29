@@ -29,10 +29,11 @@ public class Main {
         System.out.println("SISTEMA DE SAUDE");
         System.out.println("*****************");
         Scanner input = new Scanner(System.in);
-        System.out.println("Informe o ID do Medico que deseja deletar: ");
-        int id = input.nextInt();
+        System.out.println("Informe o CRM do medico:");
+        String crm = input.nextLine();
 
-       banco.detetarMedico(id,conexao);
+       Medico medico = banco.pesquisarMedico(crm, conexao);
+        System.out.println(medico.toString());
        banco.desconectar(conexao);
     }
 }

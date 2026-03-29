@@ -144,7 +144,33 @@ public class Banco {
             e.printStackTrace();
         }
     }
+    public Medico pesquisarMedico (String crm, Connection conexao){
+     String sql = "select id,nome,crm from medico where crm = ?";
+        Medico medico = new Medico();
 
+     try {
+      PreparedStatement stmt = conexao.prepareStatement(sql);
+      stmt.setString(1, crm);
+      ResultSet rs = stmt.executeQuery();
+
+      if (rs.next()){
+          int id = rs.getInt("id");
+          String nome = rs.getString("nome");
+          String crm2 = rs.getString("crm");
+          medico = new Medico();
+          medico.setId(id);
+          medico.setNome(nome);
+          medico.setCrm(crm2);
+
+          rs.close();
+          stmt.close();
+      }
+     } catch (SQLException e) {
+         System.out.println("Erro ao pesquisar o Medico pelo CRM" + e.getMessage());
+         e.printStackTrace();
+     }
+     return medico;
+    }
     public void adicionarPaciente(Paciente paciente, Connection conexao){
 
     }

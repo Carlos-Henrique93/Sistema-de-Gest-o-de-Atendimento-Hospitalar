@@ -59,7 +59,12 @@ public class Medico {
 
     }
 
-
-
-
+    @Override
+    public String toString() {
+        return "Medico{" +
+                "id=" + id +
+                ", nome='" + nome + '\'' +
+                ", crm='" + crm + '\'' +
+                '}';
+    }
 }
