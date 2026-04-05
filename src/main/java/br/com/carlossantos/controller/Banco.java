@@ -171,8 +171,55 @@ public class Banco {
      }
      return medico;
     }
-    public void adicionarPaciente(Paciente paciente, Connection conexao){
 
+    public void adicionarPaciente(Paciente paciente, Endereco endereco, ArrayList<Telefone> telefones, Connection conexao){
+        String sql = "insert into paciente (nome,endereco) values (?,?)";
+
+        //Cadastrando o Paciente
+        try {
+            PreparedStatement stmtPaciente = conexao.prepareStatement(sql,PreparedStatement.RETURN_GENERATED_KEYS);
+            stmtPaciente.setString(1, paciente.getNome());
+            stmtPaciente.setString(2, paciente.getCpf());
+
+            stmtPaciente.executeUpdate();
+            ResultSet rsPaciente = stmtPaciente.getGeneratedKeys();
+            int pacienteId = 0;
+
+            if (rsPaciente.next()){
+                pacienteId = rsPaciente.getInt(1);
+            }
+            rsPaciente.close();
+            stmtPaciente.close();
+
+            // Cadastrando o endereço usando a chave estrangeira do paciente
+
+            String slqEndereco = "insert into endereco (paciente_id,numero,bairro,rua) values (?,?,?,?)";
+            PreparedStatement stmtEndereco = conexao.prepareStatement(slqEndereco);
+            stmtEndereco.setInt(1, pacienteId);
+            stmtEndereco.setInt(2 , endereco.getNumero());
+            stmtEndereco.setString(3 , endereco.getBairro());
+            stmtEndereco.setString(4 , endereco.getRua());
+            stmtEndereco.executeUpdate();
+            stmtEndereco.close();
+
+            //Cadastrando o telefone usando a chave estrangeira do paciente
+
+            String sqlTelefone = "insert into telefone (paciente_id,numero) values (?,?)";
+
+            for (int i=0; i<telefones.size(); i++){
+                Telefone telefone = telefones.get(i);
+
+                PreparedStatement stmtTelefone = conexao.prepareStatement(sqlTelefone);
+                stmtTelefone.setInt(1, pacienteId);
+                stmtTelefone.setString(2, telefone.getNumero());
+                stmtTelefone.executeUpdate();
+                stmtTelefone.close();
+            }
+            System.out.println("Paciente foi cadastrado com sucesso!");
+
+        } catch (SQLException e) {
+            System.out.println("Não foi possivel inserir paciente no banco de dados!");
+        }
     }
 
     public void adicionarEndereco(Endereco endereco, Connection conexao){
