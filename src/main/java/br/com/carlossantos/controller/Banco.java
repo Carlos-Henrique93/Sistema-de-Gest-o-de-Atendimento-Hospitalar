@@ -172,8 +172,8 @@ public class Banco {
      return medico;
     }
 
-    public void adicionarPaciente(Paciente paciente, Endereco endereco, ArrayList<Telefone> telefones, Connection conexao){
-        String sql = "insert into paciente (nome,endereco) values (?,?)";
+    public void adicionar(Paciente paciente, Endereco endereco, ArrayList<Telefone> telefones, Connection conexao){
+        String sql = "insert into paciente (nome,cpf) values (?,?)";
 
         //Cadastrando o Paciente
         try {
@@ -218,7 +218,8 @@ public class Banco {
             System.out.println("Paciente foi cadastrado com sucesso!");
 
         } catch (SQLException e) {
-            System.out.println("Não foi possivel inserir paciente no banco de dados!");
+            System.out.println("Não foi possivel inserir paciente no banco de dados! - "+e.getMessage());
+            e.printStackTrace();
         }
     }
 

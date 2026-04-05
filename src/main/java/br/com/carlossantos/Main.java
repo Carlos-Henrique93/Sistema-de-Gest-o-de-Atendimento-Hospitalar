@@ -2,10 +2,7 @@ package br.com.carlossantos;
 
 
 import br.com.carlossantos.controller.Banco;
-import br.com.carlossantos.model.Atendimento;
-import br.com.carlossantos.model.Medico;
-import br.com.carlossantos.model.Paciente;
-import br.com.carlossantos.model.Telefone;
+import br.com.carlossantos.model.*;
 
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -19,21 +16,22 @@ public class Main {
         Banco banco = new Banco();
         Connection conexao = banco.conectar();
 
-        List<Medico> medicos = banco.pesquisaTodosMedicos(conexao);
+        //objeto paciente
+        Paciente paciente = new Paciente("Lucas de Lima Camargo","43069618890");
 
-        for (int i=0;i<medicos.size();i++) {
-            Medico m = medicos.get(i);
-            System.out.println(m.getId() + " - " + m.getNome()+ " - "+ m.getCrm());
-        }
-        System.out.println("*****************");
-        System.out.println("SISTEMA DE SAUDE");
-        System.out.println("*****************");
-        Scanner input = new Scanner(System.in);
-        System.out.println("Informe o CRM do medico:");
-        String crm = input.nextLine();
+        //objeto endereco
+        Endereco endereco = new Endereco("Rua Presidente Prudente de Moraes",171,"Centro");
 
-       Medico medico = banco.pesquisarMedico(crm, conexao);
-        System.out.println(medico.toString());
+        //ArryList telefone do paciente
+        Telefone telefone1 = new Telefone("19981886707");
+        Telefone telefone2 = new Telefone("19981886808");
+        Telefone telefone3 = new Telefone("19981886909");
+        ArrayList<Telefone> telefones = new ArrayList<>();
+        telefones.add(telefone1);
+        telefones.add(telefone2);
+        telefones.add(telefone3);
+
+        banco.adicionar(paciente,endereco,telefones,conexao);
        banco.desconectar(conexao);
     }
 }
